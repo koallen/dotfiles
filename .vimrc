@@ -21,6 +21,7 @@ Plugin 'vim-scripts/a.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'chriskempson/base16-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -74,4 +75,5 @@ set shiftwidth=4
 
 " ==== THEME CONFIGURATION SECTION ====
 
-color dracula
+"color dracula
+colorscheme base16-default-dark
