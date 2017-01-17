@@ -16,6 +16,11 @@ Plugin 'Shougo/neocomplete.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'dracula/vim'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'vim-scripts/a.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -32,7 +37,7 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-" ==== NERD TREE CONFIGURATION SECTION ====
+" ==== NERD TREE (TABS) CONFIGURATION SECTION ====
 
 " open NERD Tree on start if no file is specified
 autocmd StdinReadPre * let s:std_in=1
@@ -40,6 +45,9 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " close Vim if NERD Tree is the only tab left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" map :NERDTreeTabsToggle to <leader>t
+map <Leader>t <plug>NERDTreeTabsToggle<CR>
 
 " ==== VIM-AIRLINE CONFIGURATION SECTION ====
 
@@ -57,11 +65,20 @@ set laststatus=2
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 1
 
+" ==== SYNTASTIC CONFIGURATION SECTION ====
+
+hi clear SignColumn
+
+let g:syntastic_error_symbol = '✘'
+let g:syntastic_warning_symbol = "▲"
+
 " ==== VIM CONFIGURATION SECTION ====
 
 syntax on
-color dracula
 set number
+set showcmd
+set incsearch
+set hlsearch
 set visualbell
 set encoding=utf-8
 set backspace=indent,eol,start
@@ -69,3 +86,7 @@ set backspace=indent,eol,start
 " indentation
 set tabstop=4
 set shiftwidth=4
+
+" ==== THEME CONFIGURATION SECTION ====
+
+color dracula
