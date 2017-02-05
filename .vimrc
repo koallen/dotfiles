@@ -13,8 +13,6 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Shougo/neocomplete.vim'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'dracula/vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'vim-scripts/a.vim'
@@ -22,6 +20,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'chriskempson/base16-vim'
+Plugin 'w0rp/ale'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -51,12 +50,14 @@ set laststatus=2
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 1
 
-" ==== SYNTASTIC CONFIGURATION SECTION ====
+" ==== ALE CONFIGURATION SECTION ====
 
-hi clear SignColumn
+" always show sign gutter
+let g:ale_sign_column_always = 1
 
-let g:syntastic_error_symbol = '✘'
-let g:syntastic_warning_symbol = "▲"
+" custom sign
+let g:ale_sign_error = "✘"
+let g:ale_sign_warning = "▲"
 
 " ==== VIM CONFIGURATION SECTION ====
 
