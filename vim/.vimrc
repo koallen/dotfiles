@@ -71,7 +71,6 @@ let g:ale_sign_warning = "▲"
 " ==== VIM CONFIGURATION SECTION ===={{{
 
 " basic
-syntax enable " enable syntax highlighting
 set number " show line numbers
 set showcmd " show last command in status line
 set cursorline " highlight current line
@@ -81,6 +80,10 @@ set hlsearch " highlight search results
 set visualbell
 set encoding=utf-8
 set backspace=indent,eol,start
+
+" syntax highlighting
+au BufNewFile,BufRead *.cuh set filetype=cuda
+syntax enable " enable syntax highlighting
 
 " movement
 nnoremap j gj
