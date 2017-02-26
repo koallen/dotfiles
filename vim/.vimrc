@@ -1,4 +1,4 @@
-" ==== VUNDLE CONFIGURATION SECTION ====
+" ==== VUNDLE CONFIGURATION SECTION ===={{{
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -18,7 +18,6 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'vim-scripts/a.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
-Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'chriskempson/base16-vim'
 Plugin 'w0rp/ale'
 
@@ -26,7 +25,9 @@ Plugin 'w0rp/ale'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" ==== NERD TREE (TABS) CONFIGURATION SECTION ====
+"}}}
+
+" ==== NERD TREE (TABS) CONFIGURATION SECTION ===={{{
 
 " map :NERDTreeTabsToggle to <leader>t
 map <Leader>t <plug>NERDTreeTabsToggle<CR>
@@ -34,10 +35,12 @@ map <Leader>t <plug>NERDTreeTabsToggle<CR>
 " open on start up in console for directory
 let g:nerdtree_tabs_open_on_console_startup = 2
 
-" ==== VIM-AIRLINE CONFIGURATION SECTION ====
+"}}}
+
+" ==== VIM-AIRLINE CONFIGURATION SECTION ===={{{
 
 " set theme to wombat
-let g:airline_theme='wombat'
+let g:airline_theme='base16'
 
 " enable powerline fonts
 let g:airline_powerline_fonts = 1
@@ -45,12 +48,16 @@ let g:airline_powerline_fonts = 1
 " always show the status bar
 set laststatus=2
 
-" ==== NEOCOMPLETE CONFIGURATION SECTION ====
+"}}}
+
+" ==== NEOCOMPLETE CONFIGURATION SECTION ===={{{
 
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 1
 
-" ==== ALE CONFIGURATION SECTION ====
+"}}}
+
+" ==== ALE CONFIGURATION SECTION ===={{{
 
 " always show sign gutter
 let g:ale_sign_column_always = 1
@@ -59,28 +66,49 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = "✘"
 let g:ale_sign_warning = "▲"
 
-" ==== VIM CONFIGURATION SECTION ====
+"}}}
 
-syntax on
-au BufNewFile,BufRead *.cuh set filetype=cuda
+" ==== VIM CONFIGURATION SECTION ===={{{
 
-set number
-set showcmd
-set incsearch
-set hlsearch
+" basic
+set number " show line numbers
+set showcmd " show last command in status line
+set cursorline " highlight current line
+set lazyredraw " redraw in a lazy fasion
+set incsearch  " search as characters are entered
+set hlsearch " highlight search results
 set visualbell
 set encoding=utf-8
 set backspace=indent,eol,start
 
+" syntax highlighting
+au BufNewFile,BufRead *.cuh set filetype=cuda
+syntax enable " enable syntax highlighting
+
+" movement
+nnoremap j gj
+nnoremap k gk
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 " indentation
-set tabstop=4
-set shiftwidth=4
+set tabstop=4     " display tab as 4-space wide
+set shiftwidth=4  " identation width when using << and >>
 
-" ==== THEME CONFIGURATION SECTION ====
+" folding
+set foldenable " enable folding
+set foldmethod=syntax " fold according to syntax
+nnoremap <space> za
+autocmd BufRead .vimrc setlocal foldmethod=marker " fold .vimrc with marker
 
+" color
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
 endif
 
 colorscheme base16-default-dark
+
+"}}}
