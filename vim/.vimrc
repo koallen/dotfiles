@@ -41,7 +41,7 @@ let g:nerdtree_tabs_open_on_console_startup = 2
 " ==== VIM-AIRLINE CONFIGURATION SECTION ===={{{
 
 " set theme to wombat
-let g:airline_theme='wombat'
+let g:airline_theme='base16'
 
 " enable powerline fonts
 let g:airline_powerline_fonts = 1
@@ -71,27 +71,33 @@ let g:ale_sign_warning = "▲"
 
 " ==== VIM CONFIGURATION SECTION ===={{{
 
-syntax on
-set number
-set showcmd
-set incsearch
-set hlsearch
+" basic
+syntax enable " enable syntax highlighting
+set number " show line numbers
+set showcmd " show last command in status line
+set cursorline " highlight current line
+set lazyredraw " redraw in a lazy fasion
+set incsearch  " search as characters are entered
+set hlsearch " highlight search results
 set visualbell
 set encoding=utf-8
 set backspace=indent,eol,start
 
+" movement
+nnoremap j gj
+nnoremap k gk
+
 " indentation
-set tabstop=4
-set shiftwidth=4
+set tabstop=4     " display tab as 4-space wide
+set shiftwidth=4  " identation width when using << and >>
 
 " folding
-set foldmethod=syntax
-autocmd BufRead ~/.vimrc setlocal foldmethod=marker
+set foldenable " enable folding
+set foldmethod=syntax " fold according to syntax
+nnoremap <space> za
+autocmd BufRead .vimrc setlocal foldmethod=marker " fold .vimrc with marker
 
-"}}}
-
-" ==== THEME CONFIGURATION SECTION ===={{{
-
+" color
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
