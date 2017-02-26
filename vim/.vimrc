@@ -97,6 +97,7 @@ set shiftwidth=4  " identation width when using << and >>
 " folding
 set foldenable " enable folding
 set foldmethod=syntax " fold according to syntax
+set foldlevelstart=5   " open most folds by default"
 nnoremap <space> za
 autocmd BufRead .vimrc setlocal foldmethod=marker " fold .vimrc with marker
 
