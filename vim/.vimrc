@@ -1,4 +1,4 @@
-" ==== VUNDLE CONFIGURATION SECTION ====
+" ==== VUNDLE CONFIGURATION SECTION ===={{{
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -26,7 +26,9 @@ Plugin 'w0rp/ale'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" ==== NERD TREE (TABS) CONFIGURATION SECTION ====
+"}}}
+
+" ==== NERD TREE (TABS) CONFIGURATION SECTION ===={{{
 
 " map :NERDTreeTabsToggle to <leader>t
 map <Leader>t <plug>NERDTreeTabsToggle<CR>
@@ -34,7 +36,9 @@ map <Leader>t <plug>NERDTreeTabsToggle<CR>
 " open on start up in console for directory
 let g:nerdtree_tabs_open_on_console_startup = 2
 
-" ==== VIM-AIRLINE CONFIGURATION SECTION ====
+"}}}
+
+" ==== VIM-AIRLINE CONFIGURATION SECTION ===={{{
 
 " set theme to wombat
 let g:airline_theme='wombat'
@@ -45,12 +49,16 @@ let g:airline_powerline_fonts = 1
 " always show the status bar
 set laststatus=2
 
-" ==== NEOCOMPLETE CONFIGURATION SECTION ====
+"}}}
+
+" ==== NEOCOMPLETE CONFIGURATION SECTION ===={{{
 
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 1
 
-" ==== ALE CONFIGURATION SECTION ====
+"}}}
+
+" ==== ALE CONFIGURATION SECTION ===={{{
 
 " always show sign gutter
 let g:ale_sign_column_always = 1
@@ -59,7 +67,9 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = "✘"
 let g:ale_sign_warning = "▲"
 
-" ==== VIM CONFIGURATION SECTION ====
+"}}}
+
+" ==== VIM CONFIGURATION SECTION ===={{{
 
 syntax on
 set number
@@ -74,7 +84,13 @@ set backspace=indent,eol,start
 set tabstop=4
 set shiftwidth=4
 
-" ==== THEME CONFIGURATION SECTION ====
+" folding
+set foldmethod=syntax
+autocmd BufRead ~/.vimrc setlocal foldmethod=marker
+
+"}}}
+
+" ==== THEME CONFIGURATION SECTION ===={{{
 
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
@@ -82,3 +98,5 @@ if filereadable(expand("~/.vimrc_background"))
 endif
 
 colorscheme base16-default-dark
+
+"}}}
