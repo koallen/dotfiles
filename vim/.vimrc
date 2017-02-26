@@ -18,7 +18,6 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'vim-scripts/a.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
-Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'chriskempson/base16-vim'
 Plugin 'w0rp/ale'
 
@@ -86,6 +85,10 @@ set backspace=indent,eol,start
 " movement
 nnoremap j gj
 nnoremap k gk
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " indentation
 set tabstop=4     " display tab as 4-space wide
