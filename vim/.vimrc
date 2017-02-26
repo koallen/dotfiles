@@ -62,6 +62,8 @@ let g:ale_sign_warning = "▲"
 " ==== VIM CONFIGURATION SECTION ====
 
 syntax on
+au BufNewFile,BufRead *.cuh set filetype=cuda
+
 set number
 set showcmd
 set incsearch
