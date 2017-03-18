@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/home/koallen/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Zsh theme
 ZSH_THEME="candy"
