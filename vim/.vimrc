@@ -13,6 +13,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Shougo/neocomplete.vim'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'vim-scripts/a.vim'
@@ -53,7 +54,8 @@ set laststatus=2
 " ==== NEOCOMPLETE CONFIGURATION SECTION ===={{{
 
 " enable neocomplete
-let g:neocomplete#enable_at_startup = 1
+"let g:neocomplete#enable_at_startup = 1
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
 "}}}
 
