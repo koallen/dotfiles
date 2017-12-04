@@ -17,6 +17,10 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 
 export EDITOR="vim"
 
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 # load machine specific configurations from ZSHRC_LOCAL
 ZSHRC_LOCAL="$HOME/.zshrc.local"
 if [ -f "${ZSHRC_LOCAL}" ]; then
