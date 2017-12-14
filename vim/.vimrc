@@ -22,6 +22,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'chriskempson/base16-vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'w0rp/ale'
+Plugin 'editorconfig/editorconfig-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -69,6 +70,12 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = "✘"
 let g:ale_sign_warning = "▲"
 
+"}}}
+
+" ==== EDITORCONFIG CONFIGURATION SECTION ===={{{
+
+" avoid conflict with fugitive
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "}}}
 
 " ==== VIM CONFIGURATION SECTION ===={{{
