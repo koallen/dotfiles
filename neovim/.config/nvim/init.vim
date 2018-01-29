@@ -7,8 +7,34 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'chriskempson/base16-vim'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': './install.sh'
+    \ }
+Plug 'junegunn/fzf'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 call plug#end()
+
+" }}}
+
+" ==== language server configuration section ===={{{
+
+set hidden
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ }
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+" }}}
+
+" ==== deoplete.nvim configuration section ===={{{
+
+let g:deoplete#enable_at_startup = 1
+set completeopt-=preview
 
 " }}}
 
