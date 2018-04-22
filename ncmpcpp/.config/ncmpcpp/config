@@ -30,7 +30,7 @@
 #
 ## Needed for tag editor and file operations to work.
 ##
-#mpd_music_dir = ~/music
+mpd_music_dir = ~/Music
 #
 #mpd_crossfade_time = 5
 #
@@ -57,12 +57,12 @@
 ## sound as currently there are some problems with it.
 ##
 #
-#visualizer_output_name = Visualizer feed
+visualizer_output_name = my_fifo
 #
 ##
 ## If you set format to 44100:16:2, make it 'yes'.
 ##
-#visualizer_in_stereo = yes
+visualizer_in_stereo = no
 #
 ##
 ## Note: Below parameter defines how often ncmpcpp has to "synchronize"
@@ -80,7 +80,7 @@
 #
 ## Available values: spectrum, wave, wave_filled, ellipse.
 ##
-#visualizer_type = wave
+visualizer_type = wave_filled
 #
 #visualizer_look = ●▮
 #
@@ -113,7 +113,7 @@
 #
 ## Defines how long messages are supposed to be visible.
 ##
-#message_delay_time = 5
+message_delay_time = 3
 #
 ##### song format #####
 ##
@@ -307,7 +307,7 @@
 #
 #seek_time = 1
 #
-#volume_change_step = 2
+volume_change_step = 1
 #
 #autocenter_mode = no
 #
@@ -325,7 +325,7 @@
 #
 ## Available values: classic, alternative.
 ##
-#user_interface = classic
+user_interface = alternative
 #
 #data_fetching_delay = yes
 #
