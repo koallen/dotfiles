@@ -51,7 +51,7 @@ let g:nerdtree_tabs_open_on_console_startup = 2
 " ==== VIM-AIRLINE CONFIGURATION SECTION ===={{{
 
 " set theme to wombat
-let g:airline_theme='base16'
+let g:airline_theme='bubblegum'
 
 " enable powerline fonts
 let g:airline_powerline_fonts = 1
