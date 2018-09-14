@@ -1,12 +1,12 @@
 # Required files
-db_file            "~/.config/mpd/database"
-log_file           "~/.config/mpd/log"
+db_file            "~/.mpd/database"
+log_file           "~/.mpd/log"
 
 # Optional
-music_directory    "~/Music"
-playlist_directory "~/.config/mpd/playlists"
-pid_file           "~/.config/mpd/pid"
-state_file         "~/.config/mpd/state"
+music_directory    "~/Dropbox/Music"
+playlist_directory "~/.mpd/playlists"
+pid_file           "~/.mpd/pid"
+state_file         "~/.mpd/state"
 
 auto_update "yes"
 
