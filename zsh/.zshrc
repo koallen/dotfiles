@@ -8,7 +8,7 @@ ZSH_THEME="candy"
 HIST_STAMPS="dd.mm.yyyy"
 
 # Zsh plugins
-plugins=(autojump)
+plugins=(autojump colored-man-pages web-search)
 
 source $ZSH/oh-my-zsh.sh
 
