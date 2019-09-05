@@ -14,26 +14,6 @@ call plug#end()
 
 " }}}
 
-" ==== language server configuration section ===={{{
-
-set hidden
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ }
-
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
-" }}}
-
-" ==== deoplete.nvim configuration section ===={{{
-
-let g:deoplete#enable_at_startup = 1
-set completeopt-=preview
-
-" }}}
-
 " ==== nerdtree configuration section ===={{{
 
 " map :NERDTreeTabsToggle to <leader>t
@@ -68,6 +48,7 @@ set incsearch  " search as characters are entered
 set hlsearch " highlight search results
 set visualbell
 set encoding=utf-8
+set hidden " allow unsaved buffers to be hidden
 
 " folding
 set foldenable " enable folding

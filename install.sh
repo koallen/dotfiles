@@ -16,13 +16,12 @@ do
 		echo
 		if [[ $REPLY =~ ^[Yy]$ ]]
 		then
-			# we move the install script to a temp file,
-			# install it, and then move it back here
-			TMPFILE=$(mktemp)
-			mv $app/install.sh $TMPFILE
+			# we move the install script outside of the folder,
+			# stow it, and then move it back here
+			mv $app/install.sh tmp.sh
 			stow $app
-			$TMPFILE
-			mv $TMPFILE $app/install.sh
+			./tmp.sh
+			mv tmp.sh $app/install.sh
 		fi
 	fi
 done
