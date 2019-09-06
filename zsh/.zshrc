@@ -20,6 +20,9 @@ alias rm="rm -i"
 if [ -x "$(command -v nvim)" ]; then
 	alias vim="nvim"
 fi
+if [ -x "$(command -v tmux)" ]; then
+	alias ts="tmux new-session -A -s awesome-tmux"
+fi
 
 # env variables
 if [ -x "$(command -v vim)" ] || [ -x "$(command -v nvim)" ] ; then
