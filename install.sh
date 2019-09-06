@@ -8,15 +8,9 @@ check_command_exists() {
 }
 
 install_app() {
-	# we move the install script outside of the folder,
-	# stow it, and then move it back here
+	stow $1
 	if [[ -x "$1/install.sh" ]]; then
-		mv $1/install.sh tmp.sh
-		stow $1
-		./tmp.sh
-		mv tmp.sh $1/install.sh
-	else
-		stow $1
+		./$1/install.sh
 	fi
 }
 
