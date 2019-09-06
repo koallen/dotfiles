@@ -4,16 +4,17 @@ This repo contains some of my dotfiles.
 
 ## Installation
 
-First, clone the directory in `$HOME`
+Clone the directory in `$HOME` and run my `install.sh` script.
 
 ```bash
 $ cd ~
 $ git clone git@github.com:koallen/dotfiles.git .dotfiles
 ```
 
-Then use `stow` to symlink the files into `$HOME` (make sure you have `stow` installed)
+You can either run the script directly or provide the apps that
+you want to install dotfiles for.
 
 ```bash
-$ cd .dotfiles
-$ stow vim
+$ ./install.sh
+$ ./install.sh neovim zsh
 ```
