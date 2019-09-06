@@ -1,3 +1,6 @@
+check_command_exists curl
+check_command_exists nvim
+
 # install vim-plug and the plugins
 echo "- Installing vim-plug"
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
