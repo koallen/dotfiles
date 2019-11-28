@@ -65,7 +65,8 @@ set hidden " allow unsaved buffers to be hidden
 
 " syntax highlighting
 syntax enable
-autocmd BufRead *.cuh setlocal filetype=cuda
+autocmd BufEnter *.json,*.md let g:indentLine_setConceal = 0
+autocmd BufLeave *.json,*.md let g:indentLine_setConceal = 2
 
 " indentation
 set tabstop=4     " display tab as 4-space wide
@@ -77,8 +78,6 @@ set foldenable " enable folding
 set foldmethod=syntax " fold according to syntax
 set foldlevelstart=5   " open most folds by default"
 nnoremap <space> za
-autocmd BufNewFile,BufRead init.vim setlocal foldmethod=marker " fold .vimrc with marker
-autocmd Filetype python setlocal foldmethod=indent " fold Python files according to indentation level
 
 " movement
 nnoremap j gj
