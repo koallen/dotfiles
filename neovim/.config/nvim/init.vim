@@ -11,7 +11,7 @@ Plug 'junegunn/fzf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'jiangmiao/auto-pairs'
+Plug 'scrooloose/nerdcommenter'
 
 call plug#end()
 
@@ -27,7 +27,14 @@ let g:nerdtree_tabs_open_on_console_startup = 2
 
 " }}}
 
-" ==== vim-airline configuration section ===={{{
+"==== nerdcommenter configuration section ===={{{
+
+vmap <C-_> <plug>NERDCommenterToggle
+nmap <C-_> <plug>NERDCommenterToggle
+
+"}}}
+
+"" ==== vim-airline configuration section ===={{{
 
 " set theme to wombat
 let g:airline_theme='bubblegum'
@@ -38,6 +45,12 @@ let g:airline_powerline_fonts = 1
 " always show the status bar
 set laststatus=2
 
+" configure open buffer tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+
 " }}}
 
 " ==== indentLine configuration section ===={{{
@@ -47,6 +60,31 @@ let g:indentLine_char = '|'
 let g:indentLine_first_char = '|'
 let g:indentLine_leadingSpaceChar = '·'
 let g:indentLine_showFirstIndentLevel = 1
+
+" }}}
+
+" ==== coc.nvim configuration section ===={{{
+
+" Better display for messages
+set cmdheight=2
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Correctly highlight jsonc format
+autocmd FileType json syntax match Comment +\/\/.\+$+
+
+" add some extensions
+let g:coc_global_extensions = [
+  \ 'coc-pairs',
+  \ 'coc-python'
+  \ ]
+
+" integrate with statusline
+set statusline^=%{coc#status()}
 
 " }}}
 
