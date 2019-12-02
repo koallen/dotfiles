@@ -73,21 +73,22 @@ let g:indentLine_showFirstIndentLevel = 1
 " ==== coc.nvim configuration section ===={{{
 
 " Better display for messages
-set cmdheight=2
+"set cmdheight=2
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
-" Highlight symbol under cursor on CursorHold
+" Highlight symbol under cursor on CursorHold (requires coc-highlight)
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Correctly highlight jsonc format
-autocmd FileType json syntax match Comment +\/\/.\+$+
+"autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " add some extensions
 let g:coc_global_extensions = [
   \ 'coc-pairs',
-  \ 'coc-python'
+  \ 'coc-python',
+  \ 'coc-highlight',
   \ ]
 
 " integrate with statusline
