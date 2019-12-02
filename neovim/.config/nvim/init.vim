@@ -30,7 +30,10 @@ let g:nerdtree_tabs_open_on_console_startup = 2
 let g:NERDTreeIgnore = ['^.git$', '^node_modules$']
 
 " show hidden files by default in certain directories
-autocmd BufEnter ~/.dotfiles** let g:NERDTreeShowHidden = 1
+augroup NerdTreeShowHiddenFiles
+	autocmd!
+	autocmd BufEnter ~/.dotfiles** let g:NERDTreeShowHidden = 1
+augroup END
 
 " }}}
 
@@ -94,9 +97,6 @@ let g:indentLine_showFirstIndentLevel = 1
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
-" Correctly highlight jsonc format
-"autocmd FileType json syntax match Comment +\/\/.\+$+
-
 " add some extensions
 let g:coc_global_extensions = [
   \ 'coc-pairs',
@@ -126,8 +126,11 @@ let mapleader = ';'
 
 " syntax highlighting
 syntax enable
-autocmd BufEnter *.json,*.md let g:indentLine_setConceal = 0
-autocmd BufLeave *.json,*.md let g:indentLine_setConceal = 2
+augroup FixJsonMarkdownConceal
+	autocmd!
+	autocmd BufEnter *.json,*.md let g:indentLine_setConceal = 0
+	autocmd BufLeave *.json,*.md let g:indentLine_setConceal = 2
+augroup END
 
 " indentation
 set tabstop=4     " display tab as 4-space wide
