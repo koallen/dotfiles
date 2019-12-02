@@ -3,7 +3,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -20,11 +19,21 @@ call plug#end()
 
 " ==== NERDTree configuration section ===={{{
 
-" map :NERDTreeTabsToggle to <leader>t
-map <Leader>t <plug>NERDTreeTabsToggle<CR>
-
 " open on start up in console for directory
-let g:nerdtree_tabs_open_on_console_startup = 2
+augroup OpenNerdTreeOnDirectory
+	autocmd!
+	autocmd StdinReadPre * let s:std_in=1
+	autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && 
+		\ !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p |
+		\ ene | exe 'cd '.argv()[0] | wincmd p | endif
+augroup END
+
+" close when only nerdtree left
+augroup CloseNerdTree
+	autocmd!
+	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && 
+		\ b:NERDTree.isTabTree()) | q | endif
+augroup END
 
 " ignore certain files and directories
 let g:NERDTreeIgnore = ['^.git$', '^node_modules$']
@@ -44,7 +53,7 @@ nmap <C-_> <plug>NERDCommenterToggle
 
 "}}}
 
-"" ==== vim-airline configuration section ===={{{
+" ==== vim-airline configuration section ===={{{
 
 " set theme to wombat
 let g:airline_theme='bubblegum'
@@ -64,17 +73,17 @@ let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#buffer_idx_format = {
-  \ '0': '[0]',
-  \ '1': '[1]',
-  \ '2': '[2]',
-  \ '3': '[3]',
-  \ '4': '[4]',
-  \ '5': '[5]',
-  \ '6': '[6]',
-  \ '7': '[7]',
-  \ '8': '[8]',
-  \ '9': '[9]',
-  \ }
+	\ '0': '[0]',
+	\ '1': '[1]',
+	\ '2': '[2]',
+	\ '3': '[3]',
+	\ '4': '[4]',
+	\ '5': '[5]',
+	\ '6': '[6]',
+	\ '7': '[7]',
+	\ '8': '[8]',
+	\ '9': '[9]',
+	\ }
 
 
 " }}}
@@ -99,10 +108,10 @@ set updatetime=300
 
 " add some extensions
 let g:coc_global_extensions = [
-  \ 'coc-pairs',
-  \ 'coc-python',
-  \ 'coc-highlight',
-  \ ]
+	\ 'coc-pairs',
+	\ 'coc-python',
+	\ 'coc-highlight',
+	\ ]
 
 " integrate with statusline
 set statusline^=%{coc#status()}
@@ -131,6 +140,9 @@ augroup FixJsonMarkdownConceal
 	autocmd BufEnter *.json,*.md let g:indentLine_setConceal = 0
 	autocmd BufLeave *.json,*.md let g:indentLine_setConceal = 2
 augroup END
+
+" window splitting
+set splitright
 
 " indentation
 set tabstop=4     " display tab as 4-space wide
@@ -169,5 +181,13 @@ if filereadable(expand("~/.vimrc_background"))
 endif
 
 colorscheme base16-default-dark
+
+" auto-reload init.vim on edit
+augroup AutoReloadInitVim
+	autocmd!
+	autocmd BufWritePost */init.vim source $MYVIMRC | echon 'init.vim reloaded'
+		\ | AirlineRefresh
+augroup END
+"hahaha
 
 " }}}
