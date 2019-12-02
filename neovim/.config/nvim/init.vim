@@ -4,6 +4,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'chriskempson/base16-vim'
@@ -24,6 +25,12 @@ map <Leader>t <plug>NERDTreeTabsToggle<CR>
 
 " open on start up in console for directory
 let g:nerdtree_tabs_open_on_console_startup = 2
+
+" ignore certain files and directories
+let g:NERDTreeIgnore = ['^.git$', '^node_modules$']
+
+" show hidden files by default in certain directories
+autocmd BufEnter ~/.dotfiles** let g:NERDTreeShowHidden = 1
 
 " }}}
 
@@ -91,7 +98,8 @@ set statusline^=%{coc#status()}
 " ==== VIM CONFIGURATION SECTION ===={{{
 
 " basic
-set number " show line numbers
+set number " show line number
+set relativenumber " show relative number
 set showcmd " show last command in status line
 set cursorline " highlight current line
 set lazyredraw " redraw in a lazy fasion
