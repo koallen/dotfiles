@@ -44,6 +44,12 @@ augroup NerdTreeShowHiddenFiles
 	autocmd BufEnter ~/.dotfiles** let g:NERDTreeShowHidden = 1
 augroup END
 
+" focus to the NERDTree window
+nnoremap <Leader>f :NERDTreeFocus<CR>
+
+" automatically delete buffer for files deleted in NERDTree
+let g:NERDTreeAutoDeleteBuffer = 1
+
 " }}}
 
 "==== nerdcommenter configuration section ===={{{
