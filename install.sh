@@ -8,6 +8,9 @@ check_command_exists() {
 }
 
 install_app() {
+	if [[ -x "$1/pre-stow.sh" ]]; then
+		./$1/pre-stow.sh
+	fi
 	stow $1
 	if [[ -x "$1/install.sh" ]]; then
 		./$1/install.sh
