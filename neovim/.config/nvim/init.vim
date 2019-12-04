@@ -150,6 +150,10 @@ augroup FixJsonMarkdownConceal
 	autocmd BufEnter *.json,*.md let g:indentLine_setConceal = 0
 	autocmd BufLeave *.json,*.md let g:indentLine_setConceal = 2
 augroup END
+augroup ViewVueAsHtml
+	autocmd!
+	autocmd BufNewFile,BufRead *.vue setlocal filetype=html
+augroup END
 
 " window splitting
 set splitright
