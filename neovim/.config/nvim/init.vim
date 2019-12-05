@@ -157,6 +157,7 @@ set splitbelow
 set tabstop=4     " display tab as 4-space wide
 set shiftwidth=4  " identation width when using << and >>
 set expandtab     " use space instead of tab
+set softtabstop=4 " insert and delete 4 space
 set list lcs=tab:\|\  " show a vertical bar for tabs
 
 " folding
