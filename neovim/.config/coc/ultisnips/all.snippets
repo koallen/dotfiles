@@ -28,10 +28,10 @@ def generate_mit_license(filename):
 		"/*": ["c", "cpp", "cc"]
 	}
 	new_text = original_text
-	#if suffix in comment_char_mapping["/*"]:
-	new_text = [" * " + line for line in new_text]
-	new_text.insert(0, "/*")
-	new_text.append(" */")
+	if suffix in comment_char_mapping["/*"]:
+		new_text = [" * " + line for line in new_text]
+		new_text.insert(0, "/*")
+		new_text.append(" */")
 	return "\n".join(new_text)
 endglobal
 
