@@ -90,6 +90,14 @@ let g:airline#extensions#tabline#buffer_idx_format = {
     \ '9': '[9]',
     \ }
 
+" show the last modified date time
+function! GetLastModifiedTime()
+    return strftime('%Y-%m-%d %H:%M:%S',getftime(expand('%')))
+endfunction
+call airline#parts#define_function('last', 'GetLastModifiedTime')
+call airline#parts#define_accent('last', 'none')
+let g:airline_section_c = airline#section#create(['%<', 'file', g:airline_symbols.space, 'readonly', g:airline_symbols.space, 'last'])
+
 " }}}
 
 " ==== indentLine configuration section ===={{{
@@ -112,9 +120,6 @@ let g:coc_global_extensions = [
     \ 'coc-highlight',
     \ 'coc-snippets',
     \ ]
-
-" integrate with statusline
-set statusline^=%{coc#status()}
 
 " coc-snippets key mapping
 imap <C-l> <Plug>(coc-snippets-expand)
@@ -197,8 +202,7 @@ colorscheme base16-default-dark
 " auto-reload init.vim on edit
 augroup AutoReloadInitVim
     autocmd!
-    autocmd BufWritePost */init.vim source $MYVIMRC | echon '=== init.vim reloaded ==='
-        \ | AirlineRefresh
+    autocmd BufWritePost */init.vim source $MYVIMRC | AirlineRefresh
 augroup END
 
 " }}}
