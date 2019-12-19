@@ -8,12 +8,12 @@ check_command_exists() {
 }
 
 install_app() {
-	if [[ -x "$1/pre-stow.sh" ]]; then
-		./$1/pre-stow.sh
+	if [[ -x "$1/df-pre-stow.sh" ]]; then
+		./$1/df-pre-stow.sh
 	fi
 	stow $1
-	if [[ -x "$1/install.sh" ]]; then
-		./$1/install.sh
+	if [[ -x "$1/df-install.sh" ]]; then
+		./$1/df-install.sh
 	fi
 }
 
@@ -28,6 +28,7 @@ export -f check_command_exists
 mkdir -p $HOME/.config
 
 check_command_exists stow
+stow stow-ignore
 if [[ "$#" -eq "0" ]]; then
 	echo Going to install application dotfiles with stow
 	for app in * ; do
