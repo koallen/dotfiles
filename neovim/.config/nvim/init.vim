@@ -31,7 +31,7 @@ augroup END
 " close when only nerdtree left
 augroup CloseNerdTree
     autocmd!
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && 
+    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && 
         \ b:NERDTree.isTabTree()) | q | endif
 augroup END
 
@@ -65,6 +65,8 @@ let g:airline_theme='bubblegum'
 
 " enable powerline fonts
 let g:airline_powerline_fonts = 1
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 
 " always show the status bar
 set laststatus=2
