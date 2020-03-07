@@ -15,10 +15,22 @@ source $ZSH/oh-my-zsh.sh
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1"  ] && [ -s $BASE16_SHELL/profile_helper.sh  ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
-# path
-if [ -d "$HOME/.local/bin" ]; then
-	export PATH=$PATH:$HOME/.local/bin
-fi
+# modify PATH
+prepend_path() {
+    local abs_path=$(readlink -f "$1")
+    if [ -d "$abs_path" ]; then
+        case "$PATH" in
+            *"$abs_path"*)
+                :
+                ;;
+            *)
+                export PATH=$abs_path:$PATH
+                ;;
+        esac
+    fi
+}
+
+prepend_path $HOME/.local/bin
 
 # common aliases
 alias rm="rm -i"
