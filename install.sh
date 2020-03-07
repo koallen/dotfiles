@@ -9,17 +9,13 @@ check_command_exists() {
 
 install_app() {
 	if [[ -x "$1/df-pre-stow.sh" ]]; then
-		./$1/df-pre-stow.sh
+		source ./$1/df-pre-stow.sh
 	fi
 	stow $1
 	if [[ -x "$1/df-install.sh" ]]; then
-		./$1/df-install.sh
+		source ./$1/df-install.sh
 	fi
 }
-
-# this function is exported so that dotfile internal
-# install scripts can use this function
-export -f check_command_exists
 
 # we create this directory first so that stow
 # will not make a symlink directly for this
