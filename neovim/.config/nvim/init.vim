@@ -200,8 +200,6 @@ if filereadable(expand("~/.vimrc_background"))
     source ~/.vimrc_background
 endif
 
-colorscheme base16-default-dark
-
 " auto-reload init.vim on edit
 augroup AutoReloadInitVim
     autocmd!
