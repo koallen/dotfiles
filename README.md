@@ -15,6 +15,9 @@ You can either run the script directly or provide the apps that
 you want to install dotfiles for.
 
 ```bash
+# install for all apps
 $ ./install.sh
+
+# install for certain apps
 $ ./install.sh neovim zsh
 ```
