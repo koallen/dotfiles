@@ -8,11 +8,11 @@ check_command_exists() {
 }
 
 install_app() {
-	if [[ -x "$1/df-pre-stow.sh" ]]; then
+	if [[ -f "$1/df-pre-stow.sh" ]]; then
 		source ./$1/df-pre-stow.sh
 	fi
 	stow $1
-	if [[ -x "$1/df-install.sh" ]]; then
+	if [[ -f "$1/df-install.sh" ]]; then
 		source ./$1/df-install.sh
 	fi
 }
