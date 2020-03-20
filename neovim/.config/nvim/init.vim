@@ -13,6 +13,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'saltstack/salt-vim'
+Plug 'lepture/vim-jinja'
 
 call plug#end()
 
