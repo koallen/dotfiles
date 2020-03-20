@@ -30,6 +30,7 @@ prepend_path() {
     fi
 }
 
+mkdir -p $HOME/.local/bin
 prepend_path $HOME/.local/bin
 
 # common aliases
