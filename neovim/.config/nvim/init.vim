@@ -37,13 +37,19 @@ augroup CloseNerdTree
 augroup END
 
 " ignore certain files and directories
-let g:NERDTreeIgnore = ['^.git$', '^node_modules$']
+let g:NERDTreeIgnore = [
+    \ '^\.git$',
+    \ '^node_modules$',
+    \ '\.egg-info$',
+    \ '\.pyc',
+    \ '^build$',
+    \ '^dist$',
+    \ '^__pycache__$',
+    \ '^\.cache$',
+    \ ]
 
-" show hidden files by default in certain directories
-augroup NerdTreeShowHiddenFiles
-    autocmd!
-    autocmd BufEnter ~/.dotfiles** let g:NERDTreeShowHidden = 1
-augroup END
+" show hidden files by default
+let g:NERDTreeShowHidden = 1
 
 " automatically delete buffer for files deleted in NERDTree
 let g:NERDTreeAutoDeleteBuffer = 1
