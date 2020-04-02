@@ -47,6 +47,8 @@ let g:NERDTreeIgnore = [
     \ '^dist$',
     \ '^__pycache__$',
     \ '^\.cache$',
+    \ '^\.venv$',
+    \ '^\.pytest_cache$',
     \ ]
 
 " show hidden files by default
