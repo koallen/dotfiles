@@ -4,8 +4,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'chriskempson/base16-vim'
 Plug 'junegunn/fzf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -14,6 +14,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'saltstack/salt-vim'
 Plug 'lepture/vim-jinja'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
@@ -66,54 +67,115 @@ let g:NERDSpaceDelims = 1
 
 "}}}
 
-" ==== vim-airline configuration section ===={{{
+" ==== lightline.vim configuration section ===={{{
+
+" no need to display mode as it's displayed in the status line
+set noshowmode
 
 " set theme to wombat
-let g:airline_theme='bubblegum'
-
-" enable powerline fonts
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-
-" always show the status bar
-set laststatus=2
-
-" configure open buffer tabline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#tab_nr_type = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#buffer_idx_format = {
-    \ '0': '[0]',
-    \ '1': '[1]',
-    \ '2': '[2]',
-    \ '3': '[3]',
-    \ '4': '[4]',
-    \ '5': '[5]',
-    \ '6': '[6]',
-    \ '7': '[7]',
-    \ '8': '[8]',
-    \ '9': '[9]',
+let g:lightline = {
+    \ 'colorscheme': 'seoul256',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'readonly', 'filename', 'modified', 'mtime'] ]
+    \ },
+    \ 'inactive': {
+    \   'left': [ [ 'inactive' ] ]
+    \ },
+    \ 'tabline': {
+    \   'left': [ [ 'buffers' ] ],
+    \   'right': [ ]
+    \ },
+    \ 'component_expand': {
+    \   'buffers': 'lightline#bufferline#buffers'
+    \ },
+    \ 'component_type': {
+    \   'buffers': 'tabsel'
+    \ },
+    \ 'component_function': {
+    \   'inactive': 'CustomLightlineInactive',
+    \   'mode': 'CustomLightlineMode',
+    \   'paste': 'CustomLightlinePaste',
+    \   'mtime': 'CustomLightlineMtime',
+    \   'readonly': 'CustomLightlineReadOnly',
+    \   'filename': 'CustomLightlineFilename',
+    \   'modified': 'CustomLightlineModified',
+    \   'percent': 'CustomLightlinePercent',
+    \   'lineinfo': 'CustomLightLineLineInfo',
+    \   'fileformat': 'CustomLightLineFileFormat',
+    \   'fileencoding': 'CustomLightLineFileEncoding',
+    \   'filetype': 'CustomLightLineFileType',
+    \ },
     \ }
 
-" show the last modified date time
-function! GetLastModifiedTime()
-    return strftime('%Y-%m-%d %H:%M:%S',getftime(expand('%')))
+
+" always show the status line and buffer line
+set laststatus=2
+set showtabline=2
+
+" show buffer ordinal number
+let g:lightline#bufferline#show_number = 2
+
+" custom function to disable status line info inside NERDTree window
+function! CustomLightlineMode()
+    let fname = expand('%:t')
+    return fname =~ 'NERD_tree' ? 'NERDTree' :
+    \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
-call airline#parts#define_function('last', 'GetLastModifiedTime')
-call airline#parts#define_accent('last', 'none')
-let g:airline_section_c = airline#section#create(['%<', 'file', g:airline_symbols.space, 'readonly', g:airline_symbols.space, 'last'])
+
+function! CustomLightlineInactive()
+    let mode = CustomLightlineMode()
+    return mode ==# lightline#mode() ? expand('%:t') : mode
+endfunction
+
+function! CustomLightlinePaste()
+    return CustomLightlineMode() !=# lightline#mode() ? '' :
+    \ &paste ? 'PASTE' : ''
+endfunction
+
+function! CustomLightlineReadOnly()
+    return CustomLightlineMode() !=# lightline#mode() ? '' :
+    \ &readonly ? 'RO' : ''
+endfunction
+
+function! CustomLightlineMtime()
+    return CustomLightlineMode() ==# lightline#mode() ? strftime('%Y-%m-%d %H:%M:%S',getftime(expand('%'))) : ''
+endfunction
+
+function! CustomLightlineFilename()
+    return CustomLightlineMode() ==# lightline#mode() ? expand('%:t') : ''
+endfunction
+
+function! CustomLightlineModified()
+    return CustomLightlineMode() !=# lightline#mode() ? '' :
+    \ &modified ? '+' : ''
+endfunction
+
+function! CustomLightlinePercent()
+    return CustomLightlineMode() ==# lightline#mode() ? line('.') * 100 / line('$') . '%' : ''
+endfunction
+
+function! CustomLightLineLineInfo()
+    return CustomLightlineMode() ==# lightline#mode() ? line('.').':'. col('.') : ''
+endfunction
+
+function! CustomLightLineFileFormat()
+    return CustomLightlineMode() ==# lightline#mode() ? &ff : ''
+endfunction
+
+function! CustomLightLineFileEncoding()
+    return CustomLightlineMode() ==# lightline#mode() ? &fileencoding : ''
+endfunction
+
+function! CustomLightLineFileType()
+    return CustomLightlineMode() ==# lightline#mode() ? &filetype : ''
+endfunction
 
 " }}}
 
 " ==== indentLine configuration section ===={{{
 
 let g:indentLine_char = '¦'
-let g:indentLine_showFirstIndentLevel = 1
 
 " }}}
 
@@ -134,6 +196,17 @@ let g:coc_global_extensions = [
 " coc-snippets key mapping
 imap <C-l> <Plug>(coc-snippets-expand)
 vmap <C-j> <Plug>(coc-snippets-select)
+
+" }}}
+
+" ==== vim-tmux-navigator configuration section ===={{{
+
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
 
 " }}}
 
@@ -184,21 +257,22 @@ nnoremap <space> za
 " movement
 nnoremap j gj
 nnoremap k gk
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <C-J> :resize -5<CR>
+nnoremap <C-K> :resize +5<CR>
+nnoremap <C-L> :vertical:resize +5<CR>
+nnoremap <C-H> :vertical:resize -5<CR>
 nnoremap <Leader>a :bp<CR>
 nnoremap <Leader>d :bn<CR>
-nmap <Leader>1 <Plug>AirlineSelectTab1
-nmap <Leader>2 <Plug>AirlineSelectTab2
-nmap <Leader>3 <Plug>AirlineSelectTab3
-nmap <Leader>4 <Plug>AirlineSelectTab4
-nmap <Leader>5 <Plug>AirlineSelectTab5
-nmap <Leader>6 <Plug>AirlineSelectTab6
-nmap <Leader>7 <Plug>AirlineSelectTab7
-nmap <Leader>8 <Plug>AirlineSelectTab8
-nmap <Leader>9 <Plug>AirlineSelectTab9
+nmap <Leader>1 <Plug>lightline#bufferline#go(1)
+nmap <Leader>2 <Plug>lightline#bufferline#go(2)
+nmap <Leader>3 <Plug>lightline#bufferline#go(3)
+nmap <Leader>4 <Plug>lightline#bufferline#go(4)
+nmap <Leader>5 <Plug>lightline#bufferline#go(5)
+nmap <Leader>6 <Plug>lightline#bufferline#go(6)
+nmap <Leader>7 <Plug>lightline#bufferline#go(7)
+nmap <Leader>8 <Plug>lightline#bufferline#go(8)
+nmap <Leader>9 <Plug>lightline#bufferline#go(9)
+nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 nnoremap <Leader>f :NERDTreeFocus<CR>
 
 " color
@@ -206,11 +280,5 @@ if filereadable(expand("~/.vimrc_background"))
     let base16colorspace=256
     source ~/.vimrc_background
 endif
-
-" auto-reload init.vim on edit
-augroup AutoReloadInitVim
-    autocmd!
-    autocmd BufWritePost */init.vim source $MYVIMRC | AirlineRefresh
-augroup END
 
 " }}}
