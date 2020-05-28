@@ -12,12 +12,16 @@ plugins=(autojump colored-man-pages web-search)
 
 source $ZSH/oh-my-zsh.sh
 
+# Color theme
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1"  ] && [ -s $BASE16_SHELL/profile_helper.sh  ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
+# Zsh options
+unsetopt AUTO_CD
+
 # modify PATH
 prepend_path() {
-    local abs_path=$(readlink -f "$1")
+    local abs_path=$(readlink "$1")
     if [ -d "$abs_path" ]; then
         case "$PATH" in
             *"$abs_path"*)
