@@ -15,6 +15,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'saltstack/salt-vim'
 Plug 'lepture/vim-jinja'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'othree/yajs.vim'
 Plug 'leafOfTree/vim-vue-plugin'
 
 call plug#end()
