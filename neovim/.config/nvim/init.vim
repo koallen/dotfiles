@@ -15,6 +15,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'saltstack/salt-vim'
 Plug 'lepture/vim-jinja'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'leafOfTree/vim-vue-plugin'
 
 call plug#end()
 
@@ -234,10 +235,7 @@ augroup FixJsonMarkdownConceal
     autocmd BufEnter *.json,*.md let g:indentLine_setConceal = 0
     autocmd BufLeave *.json,*.md let g:indentLine_setConceal = 2
 augroup END
-augroup ViewVueAsHtml
-    autocmd!
-    autocmd BufNewFile,BufRead *.vue setlocal filetype=html
-augroup END
+let g:vim_vue_plugin_load_full_syntax = 1
 
 " window splitting
 set splitright
