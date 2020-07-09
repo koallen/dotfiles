@@ -21,14 +21,14 @@ unsetopt AUTO_CD
 
 # modify PATH
 prepend_path() {
-    local abs_path=$(readlink "$1")
+    local abs_path=$1
     if [ -d "$abs_path" ]; then
         case "$PATH" in
             *"$abs_path"*)
                 :
                 ;;
             *)
-                export PATH=$abs_path:$PATH
+                path=($abs_path $path)
                 ;;
         esac
     fi
