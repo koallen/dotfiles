@@ -200,6 +200,9 @@ let g:coc_global_extensions = [
     \ 'coc-go',
     \ 'coc-jedi',
     \ 'coc-sh',
+    \ 'coc-html',
+    \ 'coc-tsserver',
+    \ 'coc-vetur',
     \ ]
 
 " coc-snippets key mapping
