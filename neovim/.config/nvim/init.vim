@@ -3,20 +3,22 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'itchyny/lightline.vim'
-Plug 'mengelbrecht/lightline-bufferline'
-Plug 'chriskempson/base16-vim'
+Plug 'Xuyuanp/nerdtree-git-plugin' " show git status in NERDTree
+Plug 'itchyny/lightline.vim' " a light weight status line
+Plug 'mengelbrecht/lightline-bufferline' " display list of buffers
 Plug 'junegunn/fzf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'saltstack/salt-vim'
-Plug 'lepture/vim-jinja'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'othree/yajs.vim'
-Plug 'leafOfTree/vim-vue-plugin'
+Plug 'christoomey/vim-tmux-navigator' " integration between tmux and vim
+
+Plug 'saltstack/salt-vim' " syntax highlighting for SaltStack
+Plug 'lepture/vim-jinja' " syntax highlighting for Jinja
+Plug 'othree/yajs.vim' " syntax highlighting for JavaScript
+Plug 'leafOfTree/vim-vue-plugin' " syntax highlighting for Vue
+
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -191,10 +193,13 @@ set updatetime=300
 " add some extensions
 let g:coc_global_extensions = [
     \ 'coc-pairs',
-    \ 'coc-python',
     \ 'coc-json',
     \ 'coc-highlight',
     \ 'coc-snippets',
+    \ 'coc-rls',
+    \ 'coc-go',
+    \ 'coc-jedi',
+    \ 'coc-sh',
     \ ]
 
 " coc-snippets key mapping
