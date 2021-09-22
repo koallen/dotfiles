@@ -8,7 +8,10 @@ ZSH_THEME="candy"
 HIST_STAMPS="dd.mm.yyyy"
 
 # Zsh plugins
-plugins=(autojump colored-man-pages web-search)
+#
+# - fzf provides integration with Ctrl-R
+# - fzf-tab allows using fzf for auto completion
+plugins=(autojump colored-man-pages web-search fzf fzf-tab)
 
 source $ZSH/oh-my-zsh.sh
 
