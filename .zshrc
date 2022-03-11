@@ -11,7 +11,7 @@ HIST_STAMPS="dd.mm.yyyy"
 #
 # - fzf provides integration with Ctrl-R
 # - fzf-tab allows using fzf for auto completion
-plugins=(autojump colored-man-pages web-search fzf fzf-tab)
+plugins=(autojump ohmyzsh-full-autoupdate colored-man-pages web-search fzf fzf-tab)
 
 source $ZSH/oh-my-zsh.sh
 

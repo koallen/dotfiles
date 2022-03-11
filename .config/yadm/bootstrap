@@ -8,6 +8,10 @@ yadm submodule update --recursive --init
 echo 'Installing oh-my-zsh'
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+echo 'Installing oh-my-zsh plugins'
+git clone https://github.com/Pilaton/OhMyZsh-full-autoupdate.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/ohmyzsh-full-autoupdate
+git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
+
 echo 'Install tpm'
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
