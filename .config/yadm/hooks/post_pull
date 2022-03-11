@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd "$HOME"
+
 echo '- Installing/upgrading tmux plugins'
 ~/.tmux/plugins/tpm/bin/update_plugins all
 
