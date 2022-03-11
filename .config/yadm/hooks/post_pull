@@ -4,6 +4,7 @@ cd "$HOME"
 unset GIT_DIR # some script doesn't like being in a git environment
 
 echo '- Installing/upgrading tmux plugins'
+~/.tmux/plugins/tpm/bin/install_plugins
 ~/.tmux/plugins/tpm/bin/update_plugins all
 
 echo "- Installing/updating neovim plugins"
