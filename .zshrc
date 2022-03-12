@@ -9,8 +9,8 @@ HIST_STAMPS="dd.mm.yyyy"
 
 # Zsh plugins
 #
-# - fzf provides integration with Ctrl-R
-# - fzf-tab allows using fzf for auto completion
+# - fzf provides integration with Ctrl-R, and ** completion
+# - fzf-tab allows using fzf for tab completion
 plugins=(autojump ohmyzsh-full-autoupdate colored-man-pages web-search fzf fzf-tab)
 
 source $ZSH/oh-my-zsh.sh
@@ -62,7 +62,12 @@ export LC_ALL=en_US.UTF-8
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# load machine specific configurations from ZSHRC_LOCAL
+if [ -d "$HOME/.zshrc.d" ]; then
+    for ZSHRC_D_CONF in $HOME/.zshrc.d; do
+        source ${ZSHRC_D_CONF}
+    done
+fi
+
 ZSHRC_LOCAL="$HOME/.zshrc.local"
 if [ -f "${ZSHRC_LOCAL}" ]; then
 	source ${ZSHRC_LOCAL}
