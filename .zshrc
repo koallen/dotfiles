@@ -63,7 +63,7 @@ export LC_ALL=en_US.UTF-8
 export XDG_CONFIG_HOME="$HOME/.config"
 
 if [ -d "$HOME/.zshrc.d" ]; then
-    for ZSHRC_D_CONF in $HOME/.zshrc.d; do
+    for ZSHRC_D_CONF in $HOME/.zshrc.d/*.zshrc; do
         source ${ZSHRC_D_CONF}
     done
 fi
