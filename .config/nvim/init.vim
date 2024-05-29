@@ -7,22 +7,34 @@ Plug 'Xuyuanp/nerdtree-git-plugin' " show git status in NERDTree
 Plug 'itchyny/lightline.vim' " a light weight status line
 Plug 'mengelbrecht/lightline-bufferline' " display list of buffers
 Plug 'junegunn/fzf'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator' " integration between tmux and vim
 
+" syntax highlighting plugins
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'saltstack/salt-vim' " syntax highlighting for SaltStack
 Plug 'lepture/vim-jinja' " syntax highlighting for Jinja
-Plug 'othree/yajs.vim' " syntax highlighting for JavaScript
-Plug 'leafOfTree/vim-vue-plugin' " syntax highlighting for Vue
 
-Plug 'chriskempson/base16-vim'
+" LSP plugins
+Plug 'williamboman/mason.nvim', {'tag': 'v1.9.0'}
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+
+" completion plugins
+Plug 'hrsh7th/cmp-nvim-lsp' " provide completion from LSP server
+Plug 'hrsh7th/cmp-buffer' " provide completion from buffer
+Plug 'hrsh7th/nvim-cmp'
+
+" theme plugins
+Plug 'tinted-theming/base16-vim'
 
 call plug#end()
 
 " }}}
+
+let g:python3_host_prog = '$HOME/.pyenv/versions/neovim/bin/python'
 
 " ==== NERDTree configuration section ===={{{
 
@@ -185,29 +197,67 @@ let g:indentLine_char = '¦'
 
 " }}}
 
-" ==== coc.nvim configuration section ===={{{
+" ==== LSP configuration section ===={{{
 
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+lua << EOF
+require("mason").setup()
+require("mason-lspconfig").setup{
+    ensure_installed = {"rust_analyzer", "pylsp", "bashls", "clangd"}
+}
+require("lspconfig").rust_analyzer.setup{}
+require("lspconfig").pylsp.setup{
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    maxLineLength = 100
+                }
+            }
+        }
+    }
+}
+require("lspconfig").bashls.setup{}
+require("lspconfig").clangd.setup{}
 
-" add some extensions
-let g:coc_global_extensions = [
-    \ 'coc-pairs',
-    \ 'coc-json',
-    \ 'coc-highlight',
-    \ 'coc-snippets',
-    \ 'coc-rls',
-    \ 'coc-go',
-    \ 'coc-jedi',
-    \ 'coc-sh',
-    \ 'coc-html',
-    \ 'coc-tsserver',
-    \ 'coc-vetur',
-    \ ]
+-- make hover window narrower
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover,
+    {
+        width = 100,
+    }
+)
 
-" coc-snippets key mapping
-imap <C-l> <Plug>(coc-snippets-expand)
-vmap <C-j> <Plug>(coc-snippets-select)
+-- show documentation by pressing K
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client.server_capabilities.hoverProvider then
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = args.buf})
+        end
+    end,
+})
+EOF
+
+" }}}
+
+" ==== completion configuration section ===={{{
+
+lua << EOF
+local cmp = require("cmp")
+cmp.setup({
+    mapping = cmp.mapping.preset.insert({
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),           -- scroll doc backward
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),            -- scroll doc forward
+        ["<C-Space>"] = cmp.mapping.complete(),            -- force trigger the completion window
+        ["<C-e>"] = cmp.mapping.abort(),                   -- close complete window
+        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- accept completion with Enter
+    }),
+    sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "buffer" },
+    }),
+})
+EOF
 
 " }}}
 
@@ -244,7 +294,16 @@ augroup FixJsonMarkdownConceal
     autocmd BufEnter *.json,*.md let g:indentLine_setConceal = 0
     autocmd BufLeave *.json,*.md let g:indentLine_setConceal = 2
 augroup END
-let g:vim_vue_plugin_load_full_syntax = 1
+
+lua << EOF
+require("nvim-treesitter.configs").setup{
+    ensure_installed = { "bash", "c", "cpp", "cuda", "javascript", "json", "lua", "python", "yaml", "vim", "vimdoc" },
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
+}
+EOF
 
 " window splitting
 set splitright
@@ -285,9 +344,7 @@ nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 nnoremap <Leader>f :NERDTreeFocus<CR>
 
 " color
-if filereadable(expand("~/.vimrc_background"))
-    let base16colorspace=256
-    source ~/.vimrc_background
-endif
+let base16colorspace=256
+colorscheme base16-default-dark
 
 " }}}

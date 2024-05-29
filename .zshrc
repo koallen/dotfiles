@@ -15,10 +15,6 @@ plugins=(autojump ohmyzsh-full-autoupdate colored-man-pages web-search fzf fzf-t
 
 source $ZSH/oh-my-zsh.sh
 
-# Color theme
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1"  ] && [ -s $BASE16_SHELL/profile_helper.sh  ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-
 # Zsh options
 unsetopt AUTO_CD
 
@@ -36,6 +32,14 @@ prepend_path() {
         esac
     fi
 }
+
+if [ -d /opt/homebrew/bin ]; then
+	prepend_path /opt/homebrew/bin
+fi
+
+if [ -d "$HOME/.cargo/bin" ]; then
+    prepend_path "$HOME/.cargo/bin"
+fi
 
 mkdir -p $HOME/.local/bin
 prepend_path $HOME/.local/bin
@@ -72,3 +76,6 @@ ZSHRC_LOCAL="$HOME/.zshrc.local"
 if [ -f "${ZSHRC_LOCAL}" ]; then
 	source ${ZSHRC_LOCAL}
 fi
+
+# Color theme
+tinty init
