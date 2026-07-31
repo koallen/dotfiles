@@ -209,23 +209,6 @@ vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('ty')
 vim.lsp.enable('bashls')
 vim.lsp.enable('clangd')
-vim.lsp.config('gopls', {
-    settings = {
-        gopls = {
-            analyses = {
-                escape = true
-            },
-            hints = {
-                assignVariableTypes = true,
-                compositeLiteralTypes = true,
-                compositeLiteralFields = true,
-                constantValues = true,
-                functionTypeParameters = true,
-                parameterNames = true
-            }
-        }
-    }
-})
 vim.lsp.enable('gopls')
 
 -- show error with virtual text
