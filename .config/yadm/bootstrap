@@ -1,24 +1,41 @@
 #!/bin/sh
+#
+# This script assumes that tmux/neovim/tinty/autojump has been installed (TODO: install them automatically)
 
 cd "$HOME"
 
-echo 'Init submodules'
-yadm submodule update --recursive --init
+echo 'Set tinty theme'
+tinty install
+tinty apply base16-seti
 
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install --key-bindings --completion --no-update-rc
-git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+fzf_base="$HOME/.fzf"
+if [ ! -d "${fzf_base}" ]; then
+    echo 'Installing fzf'
+    git clone --depth 1 https://github.com/junegunn/fzf.git ${fzf_base}
+    ${fzf_base}/install --key-bindings --completion --no-update-rc
+fi
 
-echo 'Installing oh-my-zsh'
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+ohmyzsh_base="$HOME/.oh-my-zsh"
+if [ ! -d "${ohmyzsh_base}" ]; then
+    echo 'Installing oh-my-zsh'
+    git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git ${ohmyzsh_base}
+fi
 
-echo 'Installing oh-my-zsh plugins'
-git clone https://github.com/Pilaton/OhMyZsh-full-autoupdate.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/ohmyzsh-full-autoupdate
-git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
+ohmyzsh_custom_base="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+if [ ! -d "${ohmyzsh_custom_base}" ]; then
+    echo 'Installing oh-my-zsh plugins'
+    git clone https://github.com/Pilaton/OhMyZsh-full-autoupdate.git ${ohmyzsh_custom_base}/plugins/ohmyzsh-full-autoupdate
+    git clone https://github.com/Aloxaf/fzf-tab ${ohmyzsh_custom_base}/plugins/fzf-tab
+fi
 
-echo 'Install tpm'
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+tpm_base="$HOME/.tmux/plugins/tpm"
+if [ ! -d "${tpm_base}" ]; then
+    echo 'Install tpm'
+    git clone https://github.com/tmux-plugins/tpm ${tpm_base}
+fi
 
-echo 'Installing vim-plug'
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+vimplug_base="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim"
+if [ ! -f "${vimplug_base}" ]; then
+    echo 'Installing vim-plug'
+    curl -fLo ${vimplug_base} --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
