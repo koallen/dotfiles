@@ -3,9 +3,14 @@
 cd "$HOME"
 unset GIT_DIR # some script doesn't like being in a git environment
 
-echo '- Installing/upgrading tmux plugins'
-~/.tmux/plugins/tpm/bin/install_plugins
-~/.tmux/plugins/tpm/bin/update_plugins all
+tpm_base="$HOME/.tmux/plugins/tpm"
+if [ -d "${tmp_base}" ]; then
+    echo '- Installing/upgrading tmux plugins'
+    ~/.tmux/plugins/tpm/bin/install_plugins
+    ~/.tmux/plugins/tpm/bin/update_plugins all
+fi
 
-echo "- Installing/updating neovim plugins"
-nvim --headless '+PlugUpgrade' '+PlugClean!' '+PlugUpdate' '+qall'
+if command -v nvim > /dev/null 2>&1; then
+    echo "- Installing/updating neovim plugins"
+    nvim --headless '+PlugUpgrade' '+PlugClean!' '+PlugUpdate' '+qall'
+fi

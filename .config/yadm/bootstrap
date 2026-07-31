@@ -4,38 +4,38 @@
 
 cd "$HOME"
 
-echo 'Set tinty theme'
+echo '- Set tinty theme'
 tinty install
 tinty apply base16-seti
 
 fzf_base="$HOME/.fzf"
 if [ ! -d "${fzf_base}" ]; then
-    echo 'Installing fzf'
+    echo '- Installing fzf'
     git clone --depth 1 https://github.com/junegunn/fzf.git ${fzf_base}
     ${fzf_base}/install --key-bindings --completion --no-update-rc
 fi
 
 ohmyzsh_base="$HOME/.oh-my-zsh"
 if [ ! -d "${ohmyzsh_base}" ]; then
-    echo 'Installing oh-my-zsh'
+    echo '- Installing oh-my-zsh'
     git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git ${ohmyzsh_base}
 fi
 
 ohmyzsh_custom_base="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 if [ ! -d "${ohmyzsh_custom_base}" ]; then
-    echo 'Installing oh-my-zsh plugins'
+    echo '- Installing oh-my-zsh plugins'
     git clone https://github.com/Pilaton/OhMyZsh-full-autoupdate.git ${ohmyzsh_custom_base}/plugins/ohmyzsh-full-autoupdate
     git clone https://github.com/Aloxaf/fzf-tab ${ohmyzsh_custom_base}/plugins/fzf-tab
 fi
 
 tpm_base="$HOME/.tmux/plugins/tpm"
 if [ ! -d "${tpm_base}" ]; then
-    echo 'Install tpm'
+    echo '- Install tpm'
     git clone https://github.com/tmux-plugins/tpm ${tpm_base}
 fi
 
 vimplug_base="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim"
 if [ ! -f "${vimplug_base}" ]; then
-    echo 'Installing vim-plug'
+    echo '- Installing vim-plug'
     curl -fLo ${vimplug_base} --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
