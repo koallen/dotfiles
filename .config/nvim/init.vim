@@ -9,7 +9,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin' " show git status in NERDTree
 Plug 'itchyny/lightline.vim' " a light weight status line
 Plug 'mengelbrecht/lightline-bufferline' " display list of buffers
 Plug 'junegunn/fzf'
-Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator' " integration between tmux and vim
@@ -191,12 +191,6 @@ endfunction
 
 " }}}
 
-" ==== indentLine configuration section ===={{{
-
-let g:indentLine_char = '¦'
-
-" }}}
-
 " ==== LSP configuration section ===={{{
 
 lua << EOF
@@ -286,14 +280,11 @@ let mapleader = ';'
 
 " syntax highlighting
 syntax enable
-augroup FixJsonMarkdownConceal
-    autocmd!
-    autocmd BufEnter *.json,*.md let g:indentLine_setConceal = 0
-    autocmd BufLeave *.json,*.md let g:indentLine_setConceal = 2
-augroup END
 
 lua << EOF
-require"nvim-treesitter".install { "bash", "c", "cpp", "cuda", "javascript", "json", "lua", "python", "yaml", "vim", "vimdoc" }
+require("ibl").setup()
+
+require"nvim-treesitter".install { "bash", "c", "cpp", "cuda", "javascript", "json", "lua", "python", "yaml", "vim", "vimdoc", "rust", "go", "markdown" }
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
         local lang = vim.treesitter.language.get_lang(args.match) or args.match
