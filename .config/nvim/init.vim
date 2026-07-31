@@ -240,7 +240,7 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
 vim.diagnostic.config({
     signs = true,
     virtual_text = true,
-    virtual_lines = true,
+    virtual_lines = false,
     underline = true,
     update_in_insert = true,
     severity_sort = true,
