@@ -203,7 +203,7 @@ lua << EOF
 require("mason").setup()
 require("mason-lspconfig").setup{
     ensure_installed = {"rust_analyzer", "ty", "bashls", "clangd", "gopls"},
-    automatic_enable = false  -- only enable servers explicitly via vim.lsp.enable() below
+    automatic_enable = false -- avoid enabling stale servers installed in the past
 }
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('ty')
@@ -228,14 +228,6 @@ vim.lsp.config('gopls', {
 })
 vim.lsp.enable('gopls')
 
--- make hover window narrower
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-    vim.lsp.handlers.hover,
-    {
-        width = 100,
-    }
-)
-
 -- show error with virtual text
 vim.diagnostic.config({
     signs = true,
@@ -250,8 +242,11 @@ vim.diagnostic.config({
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if client.server_capabilities.hoverProvider then
-            vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = args.buf})
+        if client:supports_method('textDocument/hover') then
+            vim.keymap.set('n', 'K', function()
+                -- limit max window size to 100
+                vim.lsp.buf.hover({ max_width = 100 })
+            end, {buffer = args.buf})
         end
     end,
 })
