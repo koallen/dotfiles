@@ -16,7 +16,8 @@ plugins=(autojump ohmyzsh-full-autoupdate colored-man-pages web-search fzf fzf-t
 source $ZSH/oh-my-zsh.sh
 
 # Zsh options
-unsetopt AUTO_CD
+unsetopt auto_cd
+unsetopt bang_hist
 
 # modify PATH
 prepend_path() {
