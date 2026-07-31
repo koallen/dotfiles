@@ -9,7 +9,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin' " show git status in NERDTree
 Plug 'itchyny/lightline.vim' " a light weight status line
 Plug 'mengelbrecht/lightline-bufferline' " display list of buffers
 Plug 'junegunn/fzf'
-Plug 'lukas-reineke/indent-blankline'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator' " integration between tmux and vim
@@ -282,8 +282,6 @@ let mapleader = ';'
 syntax enable
 
 lua << EOF
-require("ibl").setup()
-
 require"nvim-treesitter".install { "bash", "c", "cpp", "cuda", "javascript", "json", "lua", "python", "yaml", "vim", "vimdoc", "rust", "go", "markdown" }
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
@@ -305,7 +303,11 @@ set tabstop=4     " display tab as 4-space wide
 set shiftwidth=4  " identation width when using << and >>
 set expandtab     " use space instead of tab
 set softtabstop=4 " insert and delete 4 space
-set list lcs=tab:\|\  " show a vertical bar for tabs
+lua << EOF
+require("ibl").setup{
+    indent = { char = '¦', tab_char = '|' },
+}
+EOF
 
 " folding
 set foldenable " enable folding
