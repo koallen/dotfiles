@@ -1,3 +1,5 @@
+let g:python3_host_prog = '$HOME/.local/share/virtualenvs/neovim/bin/python'
+
 " ==== vim-plug configuration section ===={{{
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -15,10 +17,9 @@ Plug 'christoomey/vim-tmux-navigator' " integration between tmux and vim
 " syntax highlighting plugins
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'saltstack/salt-vim' " syntax highlighting for SaltStack
-Plug 'lepture/vim-jinja' " syntax highlighting for Jinja
 
 " LSP plugins
-Plug 'williamboman/mason.nvim', {'tag': 'v1.9.0'}
+Plug 'williamboman/mason.nvim', {'tag': 'v2.1.0'}
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 
@@ -26,15 +27,14 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp' " provide completion from LSP server
 Plug 'hrsh7th/cmp-buffer' " provide completion from buffer
 Plug 'hrsh7th/nvim-cmp'
+Plug 'cohama/lexima.vim' " write pairs
 
 " theme plugins
-Plug 'tinted-theming/base16-vim'
+Plug 'tinted-theming/tinted-vim'
 
 call plug#end()
 
 " }}}
-
-let g:python3_host_prog = '$HOME/.pyenv/versions/neovim/bin/python'
 
 " ==== NERDTree configuration section ===={{{
 
@@ -202,22 +202,31 @@ let g:indentLine_char = '¦'
 lua << EOF
 require("mason").setup()
 require("mason-lspconfig").setup{
-    ensure_installed = {"rust_analyzer", "pylsp", "bashls", "clangd"}
+    ensure_installed = {"rust_analyzer", "ty", "bashls", "clangd", "gopls"},
+    automatic_enable = false  -- only enable servers explicitly via vim.lsp.enable() below
 }
-require("lspconfig").rust_analyzer.setup{}
-require("lspconfig").pylsp.setup{
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('ty')
+vim.lsp.enable('bashls')
+vim.lsp.enable('clangd')
+vim.lsp.config('gopls', {
     settings = {
-        pylsp = {
-            plugins = {
-                pycodestyle = {
-                    maxLineLength = 100
-                }
+        gopls = {
+            analyses = {
+                escape = true
+            },
+            hints = {
+                assignVariableTypes = true,
+                compositeLiteralTypes = true,
+                compositeLiteralFields = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true
             }
         }
     }
-}
-require("lspconfig").bashls.setup{}
-require("lspconfig").clangd.setup{}
+})
+vim.lsp.enable('gopls')
 
 -- make hover window narrower
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
@@ -226,6 +235,16 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
         width = 100,
     }
 )
+
+-- show error with virtual text
+vim.diagnostic.config({
+    signs = true,
+    virtual_text = true,
+    virtual_lines = true,
+    underline = true,
+    update_in_insert = true,
+    severity_sort = true,
+})
 
 -- show documentation by pressing K
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -296,13 +315,16 @@ augroup FixJsonMarkdownConceal
 augroup END
 
 lua << EOF
-require("nvim-treesitter.configs").setup{
-    ensure_installed = { "bash", "c", "cpp", "cuda", "javascript", "json", "lua", "python", "yaml", "vim", "vimdoc" },
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
-}
+require"nvim-treesitter".install { "bash", "c", "cpp", "cuda", "javascript", "json", "lua", "python", "yaml", "vim", "vimdoc" }
+vim.api.nvim_create_autocmd('FileType', {
+    callback = function(args)
+        local lang = vim.treesitter.language.get_lang(args.match) or args.match
+        local installed = require('nvim-treesitter').get_installed('parsers')
+        if vim.tbl_contains(installed, lang) then
+            vim.treesitter.start(args.buf)
+        end
+    end,
+})
 EOF
 
 " window splitting
@@ -344,7 +366,7 @@ nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 nnoremap <Leader>f :NERDTreeFocus<CR>
 
 " color
-let base16colorspace=256
-colorscheme base16-default-dark
+let tinted_colorspace=256
+colorscheme base16-seti
 
 " }}}
