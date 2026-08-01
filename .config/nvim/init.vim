@@ -10,7 +10,6 @@ Plug 'itchyny/lightline.vim' " a light weight status line
 Plug 'mengelbrecht/lightline-bufferline' " display list of buffers
 Plug 'junegunn/fzf'
 Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator' " integration between tmux and vim
 
