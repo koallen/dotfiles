@@ -306,6 +306,7 @@ set softtabstop=4 " insert and delete 4 space
 lua << EOF
 require("ibl").setup{
     indent = { char = '¦', tab_char = '|' },
+    scope = { enabled = false }
 }
 EOF
 
